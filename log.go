@@ -95,6 +95,8 @@ func (l *Logger) setup_file() {
 		fp = os.Stderr
 	}
 
+	fmt.Println(fp, fname, deadline)
+
 	l.Fptr = fp
 	l.Fname = fname
 	l.Logger.SetOutput(fp)
