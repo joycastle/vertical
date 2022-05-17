@@ -1,4 +1,4 @@
-module vertical
+module github.com/joycastle/vertical
 
 go 1.18
 
