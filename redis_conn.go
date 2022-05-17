@@ -1,11 +1,10 @@
-package redis
+package vertical
 
 import (
 	"errors"
 	"fmt"
 	"math/rand"
 	"time"
-	vertical_log "vertical/log"
 
 	"github.com/garyburd/redigo/redis"
 )
@@ -45,7 +44,7 @@ func InitRedis(configs map[string]RedisConf) error {
 				addr = config.Addrs[rand.Intn(len(config.Addrs))]
 				conn, err = redis.DialTimeout("tcp", addr, config.ConnectTimeout, config.ReadTimeout, config.WriteTimeout)
 				if err != nil {
-					vertical_log.GetLogger("error").Warnf("connect to redis[%s] failed: %s", addr, err)
+					GetLogger("error").Warnf("connect to redis[%s] failed: %s", addr, err)
 					return nil, err
 				}
 

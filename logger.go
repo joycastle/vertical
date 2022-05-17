@@ -1,4 +1,4 @@
-package log
+package vertical
 
 var (
 	stubLogger *Logger            = NewLoggerStdout()

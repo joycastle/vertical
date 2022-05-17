@@ -1,11 +1,9 @@
-package orm
+package vertical
 
 import (
 	"fmt"
 	"strings"
 	"time"
-
-	vertical_log "vertical/log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -87,7 +85,7 @@ func InitMysql(configs map[string]MysqlConf) error {
 
 		gormConfig := &gorm.Config{
 			Logger: logger.New(
-				vertical_log.GetLogger("slow"),
+				GetLogger("slow"),
 				logger.Config{
 					//SlowThreshold:             100 * time.Millisecond, // Slow SQL threshold
 					LogLevel:                  logger.Info, // Log level
