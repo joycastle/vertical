@@ -33,16 +33,24 @@ const (
 	CFG_K_REDIS_CONN_TIMEOUT  = "ConnectTimeout"
 	CFG_K_REDIS_READ_TIMEOUT  = "ReadTimeout"
 	CFG_K_REDIS_WRITE_TIMEOUT = "WriteTimeout"
+
+	//gin
+	CFG_K_GIN               = "Gin"
+	CFG_K_GIN_READ_TIMEOUT  = "ReadTimeout"
+	CFG_K_GIN_WRITE_TIMEOUT = "WriteTimeout"
 )
 
+//global vars
 var C_Log map[string]LogConf = make(map[string]LogConf)
 var C_Mysql map[string]MysqlConf = make(map[string]MysqlConf)
 var C_Redis map[string]RedisConf = make(map[string]RedisConf)
+var C_Gin GinConf
 
 func init() {
 	RegisterParseMethod(parser_log)
 	RegisterParseMethod(parser_mysql)
 	RegisterParseMethod(parser_redis)
+	RegisterParseMethod(parser_gin)
 }
 
 func parser_log(fp *ini.File) error {
@@ -112,6 +120,20 @@ func parser_redis(fp *ini.File) error {
 		}
 
 		C_Redis[sn] = c
+	}
+
+	return nil
+}
+
+func parser_gin(fp *ini.File) error {
+	sec, err := GetSection(fp, CFG_K_GIN)
+	if err != nil {
+		return ErrSectionNotExists
+	}
+
+	C_Gin = GinConf{
+		ReadTimeout:  GetSectionValueDuration(sec, CFG_K_GIN_READ_TIMEOUT),
+		WriteTimeout: GetSectionValueDuration(sec, CFG_K_GIN_WRITE_TIMEOUT),
 	}
 
 	return nil

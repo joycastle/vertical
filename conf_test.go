@@ -2,6 +2,7 @@ package vertical
 
 import (
 	"testing"
+	"time"
 )
 
 func init() {
@@ -30,6 +31,11 @@ func Test_config(t *testing.T) {
 
 	if v, ok := C_Redis["main"]; !ok || v.MaxActive != 128 {
 		t.Logf("load config file failed: %v", C_Redis)
+		t.Fail()
+	}
+
+	if C_Gin.ReadTimeout != time.Second*10 || C_Gin.WriteTimeout != time.Second*10 {
+		t.Logf("load config file failed: %v", C_Gin)
 		t.Fail()
 	}
 }

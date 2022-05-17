@@ -42,7 +42,8 @@ var (
 
 func NewLoggerStdout() *Logger {
 	l := &Logger{
-		Logger: log.New(os.Stderr, log_prefix_debug, log.Ldate|log.Lmicroseconds|log.Lshortfile),
+		Logger: log.New(os.Stdout, log_prefix_debug, log.Ldate|log.Lmicroseconds|log.Lshortfile),
+		Fptr:   os.Stdout,
 	}
 	return l
 }
