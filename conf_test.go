@@ -18,7 +18,12 @@ func Test_config(t *testing.T) {
 		t.Fail()
 	}
 
-	if v, ok := C_Mysql["default-master"]; !ok || v.Addr != "127.0.0.1:3306" || v.DnsParams != "charset=utf8mb4&parseTime=True" {
+	if v, ok := C_Mysql["default-master"]; !ok || v.Addr != "127.0.0.1:3306" || v.DnsParams != "charset=utf8mb4&parseTime=True&timeout=1s" {
+		t.Logf("load config file failed: %v", C_Mysql)
+		t.Fail()
+	}
+
+	if v, ok := C_Mysql["default-slave"]; !ok || v.Addr != "127.1.0.1:13306" || v.DnsParams != "charset=utf8mb4&parseTime=True&timeout=1s" {
 		t.Logf("load config file failed: %v", C_Mysql)
 		t.Fail()
 	}
