@@ -22,12 +22,10 @@ type Logger struct {
 }
 
 const (
-	LEVEL_DEBUG uint8 = 0x1
-	LEVEL_INFO  uint8 = 0x2
-	LEVEL_WARN  uint8 = 0x4
-	LEVEL_FATAL uint8 = 0x8
-
-	LEVEL_ALL = 0xF
+	LEVEL_DEBUG uint8 = 1
+	LEVEL_INFO  uint8 = 2
+	LEVEL_WARN  uint8 = 3
+	LEVEL_FATAL uint8 = 4
 )
 
 var (
@@ -64,7 +62,7 @@ func NewLogger(level uint8, path string) *Logger {
 	case LEVEL_FATAL:
 		prefix = log_prefix_fatal
 	default:
-		return nil
+		prefix = log_prefix_fatal
 	}
 
 	l = &Logger{
@@ -94,8 +92,6 @@ func (l *Logger) setup_file() {
 	if fp, err = open_log_file(fname); err != nil {
 		fp = os.Stderr
 	}
-
-	fmt.Println(fp, fname, deadline)
 
 	l.Fptr = fp
 	l.Fname = fname

@@ -16,7 +16,7 @@ func (c *RedisConnWrapper) Close() error {
 }
 func (c *RedisConnWrapper) Do(command string, argv ...interface{}) (interface{}, error) {
 	if c.Conn == nil {
-		GetLogger("error").Warnf("invlaid connection. call [%s %v]", command, argv)
+		GetLogger("error").Printf("[REDIS] invlaid connection. call [%s %v]", command, argv)
 		return nil, Err_invalid_connection
 	}
 	return c.Conn.Do(command, argv...)

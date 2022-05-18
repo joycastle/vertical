@@ -35,7 +35,8 @@ type GinController struct {
 var (
 	ginRouter           *gin.Engine
 	ginServer           *http.Server
-	ginLogger           *Logger
+	ginLoggerRun        *Logger
+	ginLoggerErr        *Logger
 	ginControllers      []GinController
 	ginNoRouterFunc     gin.HandlerFunc //noRouter process method
 	ginPanicFunc        gin.HandlerFunc //panic process method
@@ -46,17 +47,19 @@ func InitGinServer(runMode string) {
 
 	gin.SetMode(runMode)
 
-	ginLogger = GetLogger("gin")
+	ginLoggerRun = GetLogger("run")
+	ginLoggerErr = GetLogger("error")
 
 	ginNoRouterFunc = func(context *gin.Context) {
 		if strings.Contains(context.Request.URL.Path, "/system/ping") {
 			context.String(200, "Ping")
 		} else {
+			ginLoggerRun.Printf("[GIN] 404 page not found: %s", context.Request.URL.Path)
 			context.String(404, "page not found")
 		}
 	}
 
-	ginPanicFunc = gin.RecoveryWithWriter(ginLogger.Fptr)
+	ginPanicFunc = gin.RecoveryWithWriter(ginLoggerErr.Fptr)
 
 	if runMode == gin.DebugMode {
 		ginMiddwareHandlers = append(ginMiddwareHandlers, gin.Logger())
@@ -117,7 +120,7 @@ func StartGin(ginCfg GinConf, port int) {
 
 	go func() {
 		if err := ginServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			ginLogger.Printf("Gin Starting Failed: %s", err)
+			ginLoggerRun.Printf("[GIN] Starting Failed: %s", err)
 		}
 	}()
 
@@ -129,20 +132,20 @@ func StartGin(ginCfg GinConf, port int) {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	ginLogger.Printf("Shutdown Server ...")
+	ginLoggerRun.Printf("[GIN] Shutdown Server ...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	if err := ginServer.Shutdown(ctx); err != nil {
-		ginLogger.Printf("Server Shutdown: %s", err.Error())
+		ginLoggerRun.Printf("[GIN] Server Shutdown: %s", err.Error())
 	}
 
 	// catching ctx.Done(). timeout of 5 seconds.
 	select {
 	case <-ctx.Done():
-		ginLogger.Printf("timeout of 5 seconds.")
+		ginLoggerRun.Printf("[GIN] timeout of 5 seconds.")
 	}
 
-	ginLogger.Printf("Server exiting")
+	ginLoggerRun.Printf("[GIN] Server exiting")
 }

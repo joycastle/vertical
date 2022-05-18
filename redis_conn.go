@@ -44,12 +44,13 @@ func InitRedis(configs map[string]RedisConf) error {
 				addr = config.Addrs[rand.Intn(len(config.Addrs))]
 				conn, err = redis.DialTimeout("tcp", addr, config.ConnectTimeout, config.ReadTimeout, config.WriteTimeout)
 				if err != nil {
-					GetLogger("error").Warnf("connect to redis[%s] failed: %s", addr, err)
+					GetLogger("error").Printf("[REDIS] connect to redis[%s] failed: %s", addr, err)
 					return nil, err
 				}
 
 				_, err = conn.Do("PING")
 				if err != nil {
+					GetLogger("error").Printf("[REDIS] ping redis[%s] failed: %s", addr, err)
 					return nil, err
 				}
 				return conn, nil

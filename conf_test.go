@@ -14,7 +14,7 @@ func init() {
 }
 
 func Test_config(t *testing.T) {
-	if v, ok := C_Log["debug"]; !ok || v.Fpath != "/debug.log-*-*-*" || v.Level != 3 {
+	if v, ok := C_Log["error"]; !ok || v.Fpath != "/error.log" || v.Level != 4 {
 		t.Logf("load config file failed: %v", C_Log)
 		t.Fail()
 	}

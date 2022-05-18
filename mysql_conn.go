@@ -47,6 +47,7 @@ func InitMysql(configs map[string]MysqlConf) error {
 	for sn, config := range configs {
 		snv := strings.Split(sn, "-")
 		if len(snv) != 2 {
+			GetLogger("error").Printf("[MYSQL] config not having master and slave information: [%s] %v", sn, config)
 			continue
 		}
 		node := snv[0]
@@ -85,18 +86,19 @@ func InitMysql(configs map[string]MysqlConf) error {
 
 		gormConfig := &gorm.Config{
 			Logger: logger.New(
-				GetLogger("slow"),
+				GetLogger("slow").Logger,
 				logger.Config{
-					//SlowThreshold:             100 * time.Millisecond, // Slow SQL threshold
-					LogLevel:                  logger.Info, // Log level
-					IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
-					Colorful:                  false,       // Disable color
+					SlowThreshold:             1000 * time.Millisecond, // Slow SQL threshold
+					LogLevel:                  logger.Info,             // Log level
+					IgnoreRecordNotFoundError: true,                    // Ignore ErrRecordNotFound error for logger
+					Colorful:                  false,                   // Disable color
 				},
 			),
 		}
 
 		db, err := gorm.Open(mysql.New(masterDsnConfig), gormConfig)
 		if err != nil {
+			GetLogger("error").Printf("[MYSQL] init error: %s", masterDsn)
 			return fmt.Errorf("mysql init error %s", masterDsn)
 		}
 
