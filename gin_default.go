@@ -110,8 +110,10 @@ func StartGin(ginCfg GinConf, port int) {
 		registerControler(controller.Method, controller.RelativePath, controller.Handlers...)
 	}
 
+	listenAddr := "0.0.0.0:" + fmt.Sprintf("%d", port)
+
 	ginServer = &http.Server{
-		Addr:           "0.0.0.0:" + fmt.Sprintf("%d", port),
+		Addr:           listenAddr,
 		Handler:        ginRouter,
 		ReadTimeout:    ginCfg.ReadTimeout,
 		WriteTimeout:   ginCfg.WriteTimeout,
@@ -120,7 +122,7 @@ func StartGin(ginCfg GinConf, port int) {
 
 	go func() {
 		if err := ginServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			ginLoggerRun.Printf("[GIN] Starting Failed: %s", err)
+			ginLoggerRun.Printf("[GIN] Starting Failed: [%s] %s", listenAddr, err)
 		}
 	}()
 
@@ -132,13 +134,13 @@ func StartGin(ginCfg GinConf, port int) {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	ginLoggerRun.Printf("[GIN] Shutdown Server ...")
+	ginLoggerRun.Printf("[GIN] Shutdown Server ... %s", listenAddr)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	if err := ginServer.Shutdown(ctx); err != nil {
-		ginLoggerRun.Printf("[GIN] Server Shutdown: %s", err.Error())
+		ginLoggerRun.Printf("[GIN] Server Shutdown: [%s] %s", listenAddr, err.Error())
 	}
 
 	// catching ctx.Done(). timeout of 5 seconds.
@@ -147,5 +149,5 @@ func StartGin(ginCfg GinConf, port int) {
 		ginLoggerRun.Printf("[GIN] timeout of 5 seconds.")
 	}
 
-	ginLoggerRun.Printf("[GIN] Server exiting")
+	ginLoggerRun.Printf("[GIN] Server exiting: %s", listenAddr)
 }
