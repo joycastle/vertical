@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/joycastle/vertical/log"
+	log "github.com/joycastle/vertical/logger"
 	"github.com/joycastle/vertical/util"
 	"gopkg.in/yaml.v2"
 )
