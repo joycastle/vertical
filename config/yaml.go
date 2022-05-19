@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
+	"strings"
 
+	"github.com/joycastle/vertical/log"
+	"github.com/joycastle/vertical/util"
 	"gopkg.in/yaml.v2"
 )
 
@@ -38,7 +41,19 @@ func ReadYmalFromFile(fileName string, out interface{}) error {
 func InitYmalConfig(conf_dir string) {
 	conf_dir = filepath.Dir(conf_dir)
 	for _, parser := range fParsers {
-		if err := ReadYmalFromFile(conf_dir+"/"+parser.Fname, parser.Out); err != nil {
+
+		fileName := conf_dir + "/" + parser.Fname
+		if !util.FileExists(fileName) {
+			log.Warnf("file not exists: %s", fileName)
+			continue
+		}
+
+		if !strings.HasSuffix(fileName, ".ymal") && !strings.HasSuffix(fileName, ".yml") {
+			log.Warnf("The file format is incorrect must be .ymal or .yml: %s", fileName)
+			continue
+		}
+
+		if err := ReadYmalFromFile(fileName, parser.Out); err != nil {
 			panic(err)
 		}
 	}
