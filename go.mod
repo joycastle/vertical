@@ -5,11 +5,10 @@ go 1.18
 require (
 	github.com/garyburd/redigo v1.6.3
 	github.com/gin-gonic/gin v1.7.7
-	github.com/go-ini/ini v1.66.4
 	github.com/spf13/cast v1.5.0
+	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.5
-	gorm.io/plugin/dbresolver v1.2.0
 )
 
 require (
@@ -32,5 +31,4 @@ require (
 	golang.org/x/sys v0.0.0-20220513210249-45d2b4557a2a // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
