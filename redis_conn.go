@@ -12,6 +12,7 @@ import (
 type RedisConf struct {
 	Addrs []string
 
+	Password     string
 	TestInterval time.Duration
 
 	MaxActive   int
@@ -46,6 +47,13 @@ func InitRedis(configs map[string]RedisConf) error {
 				if err != nil {
 					GetLogger("error").Printf("[REDIS] connect to redis[%s] failed: %s", addr, err)
 					return nil, err
+				}
+
+				if config.Password != "" {
+					if _, err := conn.Do("AUTH", config.Password); err != nil {
+						conn.Close()
+						return nil, err
+					}
 				}
 
 				_, err = conn.Do("PING")

@@ -1,6 +1,7 @@
 package vertical
 
 import (
+	"os"
 	"testing"
 )
 
@@ -16,10 +17,12 @@ func TestCase_log_file_rotate(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		t_logger.Printf("log test %d", i)
 	}
+	os.Remove("./test.log")
 }
 
 func Benchmark_Debugf(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		t_logger_f.Printf("Hi: %s", "Jack")
 	}
+	os.Remove("./test.log")
 }

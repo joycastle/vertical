@@ -19,7 +19,7 @@ func Test_config(t *testing.T) {
 		t.Fail()
 	}
 
-	if v, ok := C_Mysql["default-master"]; !ok || v.Addr != "127.0.0.1:3306" || v.DnsParams != "charset=utf8mb4&parseTime=True&timeout=1s" {
+	if v, ok := C_Mysql["default-master"]; !ok || v.Addr != "127.0.0.1:3306" || v.DnsParams != "charset=utf8mb4&parseTime=True&timeout=1s" || v.Password != "123456" {
 		t.Logf("load config file failed: %v", C_Mysql)
 		t.Fail()
 	}

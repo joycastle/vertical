@@ -26,6 +26,7 @@ const (
 	//redis
 	CFG_K_REDIS               = "Redis"
 	CFG_K_REDIS_ADDRS         = "Addrs"
+	CFG_K_REDIS_PASSWORD      = "Password"
 	CFG_K_REDIS_TEST_INTERVAL = "TestInterval"
 	CFG_K_REDIS_MAX_ACTIVE    = "MaxActive"
 	CFG_K_REDIS_MAX_IDLE      = "MaxIdle"
@@ -110,13 +111,14 @@ func parser_redis(fp *ini.File) error {
 
 		c := RedisConf{
 			Addrs:          strings.Split(GetSectionValueString(sec, CFG_K_REDIS_ADDRS), ","),
-			TestInterval:   GetSectionValueDuration(psec, CFG_K_REDIS_TEST_INTERVAL),
-			MaxActive:      GetSectionValueInt(psec, CFG_K_REDIS_MAX_ACTIVE),
-			MaxIdle:        GetSectionValueInt(psec, CFG_K_REDIS_MAX_IDLE),
-			IdleTimeout:    GetSectionValueDuration(psec, CFG_K_REDIS_IDLE_TIMEOUT),
-			ConnectTimeout: GetSectionValueDuration(psec, CFG_K_REDIS_CONN_TIMEOUT),
-			ReadTimeout:    GetSectionValueDuration(psec, CFG_K_REDIS_READ_TIMEOUT),
-			WriteTimeout:   GetSectionValueDuration(psec, CFG_K_REDIS_WRITE_TIMEOUT),
+			Password:       GetSectionValueString(sec, CFG_K_REDIS_PASSWORD),
+			TestInterval:   GetSectionValueDuration(sec, CFG_K_REDIS_TEST_INTERVAL),
+			MaxActive:      GetSectionValueInt(sec, CFG_K_REDIS_MAX_ACTIVE),
+			MaxIdle:        GetSectionValueInt(sec, CFG_K_REDIS_MAX_IDLE),
+			IdleTimeout:    GetSectionValueDuration(sec, CFG_K_REDIS_IDLE_TIMEOUT),
+			ConnectTimeout: GetSectionValueDuration(sec, CFG_K_REDIS_CONN_TIMEOUT),
+			ReadTimeout:    GetSectionValueDuration(sec, CFG_K_REDIS_READ_TIMEOUT),
+			WriteTimeout:   GetSectionValueDuration(sec, CFG_K_REDIS_WRITE_TIMEOUT),
 		}
 
 		C_Redis[sn] = c

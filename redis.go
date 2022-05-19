@@ -69,3 +69,25 @@ func (c *RedisConnWrapper) DoUint64(command string, argv ...interface{}) (uint64
 func (c *RedisConnWrapper) DoValues(command string, argv ...interface{}) ([]interface{}, error) {
 	return redis.Values(c.Do(command, argv...))
 }
+
+func (c *RedisConnWrapper) Del(k string) (bool, error) {
+	return redis.Bool(c.Do("DEL", k))
+}
+func (c *RedisConnWrapper) Set(k string, v interface{}) (string, error) {
+	return redis.String(c.Do("SET", k, v))
+}
+func (c *RedisConnWrapper) TTL(k string) (int, error) {
+	return redis.Int(c.Do("TTL", k))
+}
+func (c *RedisConnWrapper) Expire(k string, expire int) (bool, error) {
+	return redis.Bool(c.Do("EXPIRE", k, expire))
+}
+func (c *RedisConnWrapper) GetString(k string) (string, error) {
+	return redis.String(c.Do("GET", k))
+}
+func (c *RedisConnWrapper) GetInt(k string) (int, error) {
+	return redis.Int(c.Do("GET", k))
+}
+func (c *RedisConnWrapper) SetEx(k string, v interface{}, expire int) (string, error) {
+	return redis.String(c.Do("SETEX", k, expire, v))
+}
