@@ -1,13 +1,13 @@
-package vertical
+package orm
 
 import (
 	"fmt"
 	"testing"
-	"time"
 
-	"gorm.io/plugin/dbresolver"
+	"github.com/joycastle/vertical/connector"
 )
 
+// User 用户表结构
 type User struct {
 	ID              uint   `json:"id" gorm:"column:id;type:int unsigned auto_increment;not null;uniqueIndex:id_unique_idx"`
 	UserID          int64  `json:"user_id" gorm:"primaryKey;column:user_id;type:bigint"`
@@ -49,44 +49,37 @@ type User struct {
 	RecommendFriendData []byte `json:"recommend_friend_data" gorm:"column:recommend_friend_data;type:mediumblob"`
 }
 
-func init() {
-	configs := make(map[string]MysqlConf)
-	configs["default-master"] = MysqlConf{
-		Addr:        "127.0.0.1:3306",
-		Username:    "root",
-		Password:    "123456",
-		Database:    "db_game",
-		DnsParams:   "charset=utf8mb4&parseTime=True&timeout=1s",
-		MaxIdle:     10,
-		MaxOpen:     20,
-		MaxLifeTime: 86400 * time.Second,
-	}
-	configs["default-slave"] = MysqlConf{
-		Addr:        "127.0.0.1:13306",
-		Username:    "root",
-		Password:    "123456",
-		Database:    "db_game",
-		DnsParams:   "charset=utf8mb4&parseTime=True&timeout=1s",
-		MaxIdle:     10,
-		MaxOpen:     20,
-		MaxLifeTime: 86400 * time.Second,
-	}
-
-	err := InitMysql(configs)
-	if err != nil {
-		panic(err)
-	}
+func (u *User) TableName() string {
+	return "user_table"
 }
 
-func Benchmark_Read(t *testing.B) {
-	var u User
-	for i := 0; i < 10000; i++ {
-		GetMysql("default").Clauses(dbresolver.Read).Raw("SELECT * FROM user_table WHERE user_id=1001 LIMIT 1").Scan(&u)
-	}
-}
+func TestCase_Gorm(t *testing.T) {
+	configs := make(map[string]connector.MysqlNodeConf)
 
-func Test_Read(t *testing.T) {
-	var u User
-	r := GetMysql("default").Clauses(dbresolver.Read).Raw("SELECT * FROM user_table WHERE user_id=1001 LIMIT 1").Scan(&u)
-	fmt.Println(r)
+	configs["default"] = connector.MysqlNodeConf{
+		Master: connector.MysqlConf{
+			Dsn:         "root:123456@tcp(127.0.0.1:3306)/db_game?charset=utf8mb4&parseTime=True&timeout=10s",
+			MaxIdle:     10,
+			MaxOpen:     20,
+			MaxLifeTime: 86400,
+		},
+		Slave: connector.MysqlConf{
+			Dsn:         "root:123456@tcp(127.0.0.1:3306)/db_game?charset=utf8mb4&parseTime=True&timeout=10s",
+			MaxIdle:     10,
+			MaxOpen:     20,
+			MaxLifeTime: 86400,
+		},
+	}
+
+	connector.InitMysqlConn(configs)
+
+	obj := NewGormSwitch("default")
+
+	u := User{}
+	result := obj.First(&u)
+	fmt.Println(result, u)
+	if result.RowsAffected != 1 || result.Error != nil {
+		t.Fatal(fmt.Sprintf("RowsAffected:%d Error:%s", result.RowsAffected, result.Error))
+	}
+
 }

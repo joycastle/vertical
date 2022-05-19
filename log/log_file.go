@@ -1,4 +1,4 @@
-package vertical
+package log
 
 import (
 	"fmt"

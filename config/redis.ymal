@@ -1,0 +1,9 @@
+default:
+  Addr: 127.0.0.1:6379,127.0.0.1:6379,127.0.0.1:6379
+  MaxActive: 64 
+  MaxIdle: 16  
+  IdleTimeout: 240    
+  ConnectTimeout: 1
+  ReadTimeout: 1
+  WriteTimeout: 1
+  TestInterval: 60
