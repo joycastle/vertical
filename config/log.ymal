@@ -1,3 +1,4 @@
  error: ./error.log
  run: ./run.log-*-*-*
  mysql: ./mysql.log-*-*
+ monitor: ./monitor.log-*-*-*
