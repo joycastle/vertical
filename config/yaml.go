@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
-	"path/filepath"
 	"strings"
 
 	log "github.com/joycastle/vertical/logger"
@@ -39,7 +38,7 @@ func ReadYmalFromFile(fileName string, out interface{}) error {
 }
 
 func InitYmalConfig(conf_dir string) {
-	conf_dir = filepath.Dir(conf_dir)
+	conf_dir = strings.TrimRight(conf_dir, "/")
 	for _, parser := range fParsers {
 
 		fileName := conf_dir + "/" + parser.Fname
