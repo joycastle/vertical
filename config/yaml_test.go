@@ -2,6 +2,7 @@ package config
 
 import (
 	"testing"
+	"time"
 )
 
 func TestCase_App_Ymal(t *testing.T) {
@@ -15,7 +16,7 @@ func TestCase_App_Ymal(t *testing.T) {
 		t.Fatal(C_Mysql)
 	}
 
-	if C_Redis["default"].TestInterval != 60 || C_Redis["default"].ConnectTimeout != 1 {
+	if C_Redis["default"].TestInterval != 60*time.Second || C_Redis["default"].ConnectTimeout != time.Second*10 {
 		t.Fatal(C_Redis)
 	}
 }

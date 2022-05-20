@@ -11,10 +11,10 @@ import (
 )
 
 type MysqlConf struct {
-	Dsn         string `yaml:"Dsn"`
-	MaxIdle     int    `yaml:"MaxIdle"`
-	MaxOpen     int    `yaml:"MaxOpen"`
-	MaxLifeTime int    `yaml:"MaxLifeTime"`
+	Dsn         string        `yaml:"Dsn"`
+	MaxIdle     int           `yaml:"MaxIdle"`
+	MaxOpen     int           `yaml:"MaxOpen"`
+	MaxLifeTime time.Duration `yaml:"MaxLifeTime"`
 }
 
 type MysqlNodeConf struct {
@@ -89,7 +89,7 @@ func GetMysqlConn(config MysqlConf) (*gorm.DB, error) {
 	} else {
 		sqlDb.SetMaxIdleConns(config.MaxIdle)
 		sqlDb.SetMaxOpenConns(config.MaxOpen)
-		sqlDb.SetConnMaxLifetime(time.Duration(config.MaxLifeTime) * time.Second)
+		sqlDb.SetConnMaxLifetime(config.MaxLifeTime)
 	}
 
 	return gdb, nil
