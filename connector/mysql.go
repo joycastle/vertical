@@ -111,12 +111,13 @@ func GetMysqlConn(config MysqlConf) (*gorm.DB, error) {
 			for {
 				time.Sleep(time.Second * 10)
 				stat := sqlDb.Stats()
-				infos := fmt.Sprintf("MYSQL Connection open:%d, inUse:%d, idle:%d, waitCount:%d, waitDuration:%v",
+				infos := fmt.Sprintf("MYSQL Connection open:%d, inUse:%d, idle:%d, waitCount:%d, waitDuration:%v dsn:%s",
 					stat.OpenConnections,
 					stat.InUse,
 					stat.Idle,
 					stat.WaitCount,
-					stat.WaitDuration)
+					stat.WaitDuration,
+					config.Dsn)
 				log.GetLogger("monitor").Infof(infos)
 			}
 		}()

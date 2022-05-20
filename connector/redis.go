@@ -73,6 +73,23 @@ func InitRedisConn(configs map[string]RedisConf) {
 			},
 		}
 
+		go func() {
+			// PoolStats contains pool statistics.
+			//type PoolStats struct {
+			// ActiveCount is the number of connections in the pool. The count includes
+			// idle connections and connections in use.
+			// ActiveCount int
+			// IdleCount is the number of idle connections in the pool.
+			//IdleCount int
+			//}
+			for {
+				time.Sleep(time.Second * 10)
+				stat := rp.Stats()
+				infs := fmt.Sprintf("Redis Pool ActiveCount:%d, IdleCount:%d node:%s", stat.ActiveCount, stat.IdleCount, sn)
+				log.GetLogger("monitor").Info(infs)
+			}
+		}()
+
 		redisConnMapping[sn] = rp
 	}
 }
