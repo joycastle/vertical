@@ -23,8 +23,8 @@ const (
 )
 
 type GinConf struct {
-	ReadTimeout  time.Duration
-	WriteTimeout time.Duration
+	ReadTimeout  time.Duration `yaml:"ReadTimeout"`
+	WriteTimeout time.Duration `yaml:"WriteTimeout"`
 }
 
 type GinController struct {

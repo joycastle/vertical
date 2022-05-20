@@ -19,4 +19,8 @@ func TestCase_App_Ymal(t *testing.T) {
 	if C_Redis["default"].TestInterval != 60*time.Second || C_Redis["default"].ConnectTimeout != time.Second*10 {
 		t.Fatal(C_Redis)
 	}
+
+	if C_Gin.WriteTimeout != time.Second*30 {
+		t.Fatal(C_Redis)
+	}
 }
