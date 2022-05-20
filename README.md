@@ -1,5 +1,9 @@
 # vertical
-基础组件操作
+基础组件操作 （不断补充更新中）
+
+```
+    go get -u github.com/joycastle/vertical@main 
+```
 
 ### 使用demo 
 ```
