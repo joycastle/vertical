@@ -114,6 +114,7 @@ func StartGin(ginCfg GinConf, port int) {
 	}
 
 	go func() {
+		logger.GetLogger("run").Infof("Gin Runing %s", "0.0.0.0:"+fmt.Sprintf("%d", port))
 		if err := ginServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			logger.GetLogger("error").Warnf("Gin Starting Failed: %s", err)
 		}
