@@ -1,4 +1,4 @@
-package vertical
+package gin
 
 import (
 	"net/http"
@@ -12,7 +12,8 @@ func Test_GIN(t *testing.T) {
 
 	ret := make(chan bool, 1)
 
-	InitGinServer(gin.ReleaseMode)
+	//InitGinServer(gin.ReleaseMode)
+	InitGinServer(gin.DebugMode)
 
 	cfg := GinConf{
 		ReadTimeout:  time.Second * 10,

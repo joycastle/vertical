@@ -77,9 +77,9 @@ func InitRedisConn(configs map[string]RedisConf) {
 	}
 }
 
-func GetRedisConn(sn string) *redis.Pool {
+func GetRedisConn(sn string) redis.Conn {
 	if v, ok := redisConnMapping[sn]; ok {
-		return v
+		return v.Get()
 	}
 	log.Warnf("redis conn not exists: node:%s: ", sn)
 	panic(fmt.Sprintf("redis conn not exists: node:%s: ", sn))

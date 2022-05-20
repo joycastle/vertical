@@ -24,9 +24,8 @@ func TestCase_Redis(t *testing.T) {
 
 	InitRedisConn(configs)
 
-	connPool := GetRedisConn("default")
-
-	conn := connPool.Get()
+	conn := GetRedisConn("default")
+	defer conn.Close()
 
 	ret, err := redis.String(conn.Do("SET", "lifuxing", "123455"))
 	if err != nil || ret != "OK" {

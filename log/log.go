@@ -57,7 +57,11 @@ func EnableColor() {
 }
 
 func NewLoggerDefault() *Logger {
-	l := &Logger{}
+	l := &Logger{
+		fpath: "",
+		Fptr:  os.Stdout,
+		Fname: "",
+	}
 
 	l.Logger = log.New(os.Stdout, "", log.Ldate|log.Lmicroseconds|log.Lshortfile)
 
