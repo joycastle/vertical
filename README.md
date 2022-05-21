@@ -46,17 +46,17 @@ func main() {
 ```
 
 
-### 配置（ymal）
+### 配置（yaml）
 ```
   常用配置：（直接解析）
-    ├── gin.ymal
-    ├── log.ymal
-    ├── mysql.ymal
-    ├── redis.ymal
+    ├── gin.yaml
+    ├── log.yaml
+    ├── mysql.yaml
+    ├── redis.yaml
     
   自定义配置
     var gcf GrpcConf
-    config.RegisterParser("grpc.ymal"， &grpc) 
+    config.RegisterParser("grpc.yaml"， &grpc) 
     ------
     config.RegisterParser("配置文件名"， ”解析结构体“) 
   
@@ -66,7 +66,7 @@ func main() {
 
 ### logger使用
 ```
-log.ymal
+log.yaml
   error: ./error.log
   run: ./run.log-*-*-*
   mysql: ./mysql.log-*-*
@@ -90,7 +90,7 @@ log.ymal
 
 ### Mysql
 ```
-mysql.ymal:
+mysql.yaml:
 db_game:
   Master:
     Dsn: root:123456@tcp(127.0.0.1:3306)/db_game?charset=utf8mb4&parseTime=True&timeOut=10s
@@ -131,7 +131,7 @@ db_game2:
 
 ### Redis
 ```
-redis.ymal
+redis.yaml
 default:
   Addr: 127.0.0.1:6379,127.0.0.1:6379,127.0.0.1:6379
   Password: 123456
@@ -163,11 +163,11 @@ redis2:
 ├── README.md
 ├── config                #配置文件解析
 │   ├── app.go
-│   ├── gin.ymal
-│   ├── log.ymal
-│   ├── mysql.ymal
-│   ├── redis.ymal
-│   ├── test.ymal
+│   ├── gin.yaml
+│   ├── log.yaml
+│   ├── mysql.yaml
+│   ├── redis.yaml
+│   ├── test.yaml
 │   ├── yaml.go
 │   └── yaml_test.go
 ├── connector           #连接器connector
