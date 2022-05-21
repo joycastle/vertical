@@ -47,8 +47,8 @@ func InitYmalConfig(conf_dir string) {
 			continue
 		}
 
-		if !strings.HasSuffix(fileName, ".ymal") && !strings.HasSuffix(fileName, ".yml") {
-			log.Warnf("The file format is incorrect must be .ymal or .yml: %s", fileName)
+		if !strings.HasSuffix(fileName, ".yaml") && !strings.HasSuffix(fileName, ".yml") {
+			log.Warnf("The file format is incorrect must be .yaml or .yml: %s", fileName)
 			continue
 		}
 

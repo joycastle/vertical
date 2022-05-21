@@ -11,8 +11,8 @@ var C_Redis map[string]connector.RedisConf = make(map[string]connector.RedisConf
 var C_Gin gin.GinConf
 
 func init() {
-	RegisterParser("log.ymal", &C_Log)
-	RegisterParser("mysql.ymal", &C_Mysql)
-	RegisterParser("redis.ymal", &C_Redis)
-	RegisterParser("gin.ymal", &C_Gin)
+	RegisterParser("log.yaml", &C_Log)
+	RegisterParser("mysql.yaml", &C_Mysql)
+	RegisterParser("redis.yaml", &C_Redis)
+	RegisterParser("gin.yaml", &C_Gin)
 }
