@@ -6,9 +6,9 @@ import (
 )
 
 func TestCase_App_Ymal(t *testing.T) {
-	InitYmalConfig("./")
+	InitConfig("./")
 
-	if C_Log["error"] != "./error.log" {
+	if C_Log["error"].LogName != "./error.log" {
 		t.Fatal(C_Log)
 	}
 

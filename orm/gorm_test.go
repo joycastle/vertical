@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/joycastle/vertical/connector"
+	cop_conn "github.com/joycastle/cop/connector"
 )
 
 // User 用户表结构
@@ -54,16 +54,16 @@ func (u *User) TableName() string {
 }
 
 func TestCase_Gorm(t *testing.T) {
-	configs := make(map[string]connector.MysqlNodeConf)
+	configs := make(map[string]cop_conn.MysqlNodeConf)
 
-	configs["default"] = connector.MysqlNodeConf{
-		Master: connector.MysqlConf{
+	configs["default"] = cop_conn.MysqlNodeConf{
+		Master: cop_conn.MysqlConf{
 			Dsn:         "root:123456@tcp(127.0.0.1:3306)/db_game?charset=utf8mb4&parseTime=True&timeout=10s",
 			MaxIdle:     10,
 			MaxOpen:     20,
 			MaxLifeTime: 86400,
 		},
-		Slave: connector.MysqlConf{
+		Slave: cop_conn.MysqlConf{
 			Dsn:         "root:123456@tcp(127.0.0.1:3306)/db_game?charset=utf8mb4&parseTime=True&timeout=10s",
 			MaxIdle:     10,
 			MaxOpen:     20,
@@ -71,13 +71,16 @@ func TestCase_Gorm(t *testing.T) {
 		},
 	}
 
-	connector.InitMysqlConn(configs)
+	cop_conn.InitMysqlConn(configs)
 
-	obj := NewGormSwitch("default")
+	obj, err := NewGormSwitch("default")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	u := User{}
 	result := obj.First(&u)
-	fmt.Println(result, u)
+	fmt.Println(result)
 	if result.RowsAffected != 1 || result.Error != nil {
 		t.Fatal(fmt.Sprintf("RowsAffected:%d Error:%s", result.RowsAffected, result.Error))
 	}

@@ -1,4 +1,12 @@
- error: ./error.log
- run: ./run.log-*-*-*
- mysql: ./mysql.log-*-*
- monitor: ./monitor.log-*-*-*
+error: 
+  LogName: ./error.log
+  ExpireDays: 30
+run:
+  LogName: ./run.log-*-*-*
+  ExpireDays: 30
+mysql:
+  LogName: ./mysql.log-*-*
+  ExpireDays: 30
+monitor: 
+  LogName: ./monitor.log-*-*-*
+  ExpireDays: 30

@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/joycastle/vertical/connector"
+	"github.com/joycastle/cop/connector"
 )
 
 func TestCase_RedisHash(t *testing.T) {

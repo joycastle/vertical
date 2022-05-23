@@ -3,7 +3,7 @@ package orm
 import (
 	"database/sql"
 
-	"github.com/joycastle/vertical/connector"
+	cop_conn "github.com/joycastle/cop/connector"
 	"gorm.io/gorm"
 )
 
@@ -13,13 +13,25 @@ type GormSwitch struct {
 	Slave  *gorm.DB
 }
 
-func NewGormSwitch(node string) *GormSwitch {
+func NewGormSwitch(node string) (*GormSwitch, error) {
+
+	m, err := cop_conn.GetMysqlMaster(node)
+	if err != nil {
+		return nil, err
+	}
+
+	s, err := cop_conn.GetMysqlSlave(node)
+	if err != nil {
+		return nil, err
+	}
+
 	gs := &GormSwitch{
 		Node:   node,
-		Master: connector.GetMysqlMaster(node),
-		Slave:  connector.GetMysqlSlave(node),
+		Master: m,
+		Slave:  s,
 	}
-	return gs
+
+	return gs, nil
 }
 
 func (gs *GormSwitch) GetMasterDB() *gorm.DB {

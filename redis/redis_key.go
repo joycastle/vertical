@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/garyburd/redigo/redis"
-	"github.com/joycastle/vertical/connector"
+	"github.com/joycastle/cop/connector"
 )
 
 var (

@@ -34,6 +34,10 @@ github.com/jinzhu/inflection v1.0.0/go.mod h1:h+uFLlag+Qp1Va5pdKtLDYj+kHp5pxUVkr
 github.com/jinzhu/now v1.1.4/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=
 github.com/jinzhu/now v1.1.5 h1:/o9tlHleP7gOFmsnYNz3RGnqzefHA47wQpKrrdTIwXQ=
 github.com/jinzhu/now v1.1.5/go.mod h1:d3SSVoowX0Lcu0IBviAWJpolVfI5UJVZZ7cO71lE/z8=
+github.com/joycastle/cop v0.0.0-20220523114807-9b93a2f383b1 h1:Z3tDTMJDRWg2CoHiVEo2msAWhM/2rjWqHw84f5XU5lw=
+github.com/joycastle/cop v0.0.0-20220523114807-9b93a2f383b1/go.mod h1:lsJbJCHeH5PNef+4cdH6P8XRoKMgKJC3rSoyyp7QtxM=
+github.com/joycastle/cop v0.0.0-20220523121540-4f93af4ff4cc h1:nhZaSgGCWj3MwyQRAokapaqQecIq89G1M3YrU9x6F8k=
+github.com/joycastle/cop v0.0.0-20220523121540-4f93af4ff4cc/go.mod h1:lsJbJCHeH5PNef+4cdH6P8XRoKMgKJC3rSoyyp7QtxM=
 github.com/json-iterator/go v1.1.9/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/uOdHXbAo4=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=

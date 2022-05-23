@@ -2,7 +2,7 @@ package redis
 
 import (
 	"github.com/garyburd/redigo/redis"
-	"github.com/joycastle/vertical/connector"
+	"github.com/joycastle/cop/connector"
 )
 
 func Rds_HGetString(sn string, key string, subKey string) (string, error) {
