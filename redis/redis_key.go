@@ -12,6 +12,18 @@ var (
 	ErrNotFound     = errors.New("redigo: nil returned")
 )
 
+func Rds_GetBytes(sn string, key string) ([]byte, error) {
+	conn := connector.GetRedisConn(sn)
+	defer conn.Close()
+
+	r, err := redis.Bytes(conn.Do("GET", key))
+
+	if err != nil && err.Error() == ErrNotFoundDesc {
+		return r, ErrNotFound
+	}
+
+	return r, err
+}
 func Rds_GetString(sn string, key string) (string, error) {
 	conn := connector.GetRedisConn(sn)
 	defer conn.Close()
