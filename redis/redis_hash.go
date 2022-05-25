@@ -35,9 +35,21 @@ func Rds_HExists(sn string, key string, subKey string) (int, error) {
 
 	return redis.Int(conn.Do("HEXISTS", key, subKey))
 }
-func Rds_HGetAllString(sn string, key string) ([]string, error) {
+func Rds_HGetAllString(sn string, key string) (map[string]string, error) {
 	conn := connector.GetRedisConn(sn)
 	defer conn.Close()
 
-	return redis.Strings(conn.Do("HGETALL", key))
+	return redis.StringMap(conn.Do("HGETALL", key))
+}
+func Rds_HGetAllInt(sn string, key string) (map[string]int, error) {
+	conn := connector.GetRedisConn(sn)
+	defer conn.Close()
+
+	return redis.IntMap(conn.Do("HGETALL", key))
+}
+func Rds_HGetAllInt64(sn string, key string) (map[string]int64, error) {
+	conn := connector.GetRedisConn(sn)
+	defer conn.Close()
+
+	return redis.Int64Map(conn.Do("HGETALL", key))
 }

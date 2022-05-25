@@ -57,4 +57,20 @@ func TestCase_RedisHash(t *testing.T) {
 	if ret, err := Rds_HGetAllString("default", key+"1"); err != nil {
 		t.Fatal(ret, err)
 	}
+
+	if ret, err := Rds_HSet("default", key, "levin", "123"); err != nil || ret != 1 {
+		t.Fatal(ret, err)
+	}
+
+	if ret, err := Rds_HSet("default", key, "blue", "000"); err != nil || ret != 1 {
+		t.Fatal(ret, err)
+	}
+
+	if ret, err := Rds_HSet("default", key, "green", "111"); err != nil || ret != 1 {
+		t.Fatal(ret, err)
+	}
+
+	if ret, err := Rds_HGetAllString("default", key); err != nil || ret["green"] != "111" {
+		t.Fatal(ret, err)
+	}
 }
